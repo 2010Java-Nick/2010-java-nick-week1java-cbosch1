@@ -89,17 +89,28 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if (this.getSideOne() == this.getSideTwo() & 
+				this.getSideTwo() == this.getSideThree()){
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if (this.getSideOne() == this.getSideTwo() || 
+				this.getSideOne() == this.getSideThree() || 
+				this.getSideTwo() == this.getSideThree()){
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if (this.getSideOne() != this.getSideTwo() &
+				this.getSideOne() != this.getSideThree() &
+				this.getSideTwo() != this.getSideThree()){
+					return true;
+				}
 			return false;
 		}
 
@@ -120,9 +131,44 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+	public static int getScrabbleScore(String string) {
+		int score = 0;
+		String input = string.toUpperCase();
+		String onePoint = "AEIOULNRST";
+		String twoPoint = "G";
+		String threePoint = "CMP";
+		String fourPoint = "FHVWY";
+		String fivePoint = "K";
+		String eightPoint = "JK";
+		String tenPoint = "QZ";
+		
+		String[] ar = input.split("(?!^)");
+
+		for (String c : ar){
+			if(onePoint.contains(c)){
+				score += 1;
+			}
+			else if(twoPoint.contains(c)){
+				score += 2;
+			}
+			else if(threePoint.contains(c)){
+				score += 3;
+			}
+			else if(fourPoint.contains(c)){
+				score += 4;
+			}
+			else if(fivePoint.contains(c)){
+				score += 5;
+			}
+			else if(eightPoint.contains(c)){
+				score += 8;
+			}
+			else if(tenPoint.contains(c)){
+				score += 10;
+			}
+		}
+
+		return score;
 	}
 
 	/**
