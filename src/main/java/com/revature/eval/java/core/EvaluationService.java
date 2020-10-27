@@ -471,27 +471,27 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 		
-		String alphabet = "abcdefghijklmnopqrstuvwxyz";
-		String[] arrAlpha = alphabet.split("(?!^)");
-		Map<String, String> dictCiph = new HashMap<String, String>();
-		int pointer = 0;
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String[] arrAlpha = alphabet.split("(?!^)");
+			Map<String, String> dictCiph = new HashMap<String, String>();
+			int pointer = 0;
 
-		for (int i = 0; i < alphabet.length(); i++){
-			pointer = i + this.key-1;
-			if (pointer == 26) {
-				pointer = 0;
+			for (int i = 0; i < alphabet.length(); i++){
+				pointer = i + this.key-1;
+				if (pointer == 26) {
+					pointer = 0;
+				}
+				dictCiph.put(arrAlpha[pointer], String.valueOf(i));
 			}
-			dictCiph.put(arrAlpha[pointer], String.valueOf(i));
-		}
 
-		String[] input = string.split("(?!^)");
-		String output = "";
+			String[] input = string.split("(?!^)");
+			String output = "";
 
-		for (String c : input){
-			output += dictCiph.get(c);
-		}
+			for (String c : input){
+				output += dictCiph.get(c);
+			}
 
-		return output;
+			return output;
 		}
 	}
 
@@ -506,9 +506,21 @@ public class EvaluationService {
 	 * 
 	 * @param i
 	 * @return
-	 */
-	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
+	*/
+	public int calculateNthPrime(int num) {
+
+		/* generate primes until num have been added to list
+		*
+		*	List<Integer> primeList = new ArrayList<>();
+		*
+		*	int primePointer = 0 //For tracking where we've been
+		*
+		*	while(primeList.length() < num) {
+		*		generate next prime
+		*	}
+		*
+		*	return primeList.last
+		*/
 		return 0;
 	}
 
