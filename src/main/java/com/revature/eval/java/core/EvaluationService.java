@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EvaluationService {
 
@@ -92,29 +93,20 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			if (this.getSideOne() == this.getSideTwo() & 
-				this.getSideTwo() == this.getSideThree()){
-				return true;
-			}
-			return false;
+			return (this.getSideOne() == this.getSideTwo() && 
+					this.getSideTwo() == this.getSideThree());
 		}
 
 		public boolean isIsosceles() {
-			if (this.getSideOne() == this.getSideTwo() || 
-				this.getSideOne() == this.getSideThree() || 
-				this.getSideTwo() == this.getSideThree()){
-				return true;
-			}
-			return false;
+			return (this.getSideOne() == this.getSideTwo() || 
+					this.getSideOne() == this.getSideThree() || 
+					this.getSideTwo() == this.getSideThree());
 		}
 
 		public boolean isScalene() {
-			if (this.getSideOne() != this.getSideTwo() &
-				this.getSideOne() != this.getSideThree() &
-				this.getSideTwo() != this.getSideThree()){
-					return true;
-				}
-			return false;
+			return (this.getSideOne() != this.getSideTwo() &&
+					this.getSideOne() != this.getSideThree() &&
+					this.getSideTwo() != this.getSideThree());
 		}
 
 	}
@@ -278,24 +270,25 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T extends Comparable<T>> {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
 			List<T> list = this.getSortedList();
 			int left = 0;
+			int middle = 0;
 			int right = list.size();
 
 			while (left <= right) {
-				int middle = left + (right - 1) / 2;
+				middle = (left + (right - 1)) / 2;
 
-				if (list.get(middle).equals(t)){
+				if (list.get(middle).compareTo(t) == 0){
 					return middle;
 				}
 
-				//if (list.get(middle) > t) {
-				//	left = middle + 1;
-				//}
+				if (list.get(middle).compareTo(t) < 0) {
+					left = middle + 1;
+				}
 
 				else{
 					right = middle - 1;
