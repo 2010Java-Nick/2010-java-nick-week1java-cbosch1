@@ -4,6 +4,7 @@ import java.time.temporal.Temporal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class EvaluationService {
 
@@ -408,8 +409,30 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		List<Long> factors = new ArrayList<>();
+
+		long num = l;
+
+		if (num == 1 || num == 0){
+			return factors;
+		}
+
+		if (num == 2){
+			factors.add(2L);
+			return factors;
+		}
+
+		for (int i = 2; i < num; i++){
+			while (num % i == 0){
+				factors.add(Long.valueOf(i));
+				num = num/i;
+			}
+		}
+
+		if (num > 2){
+			factors.add(num);
+		}
+		return factors;
 	}
 
 	/**
