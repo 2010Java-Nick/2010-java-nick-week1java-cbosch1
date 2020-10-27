@@ -470,10 +470,29 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+		
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		String[] arrAlpha = alphabet.split("(?!^)");
+		Map<String, String> dictCiph = new HashMap<String, String>();
+		int pointer = 0;
+
+		for (int i = 0; i < alphabet.length(); i++){
+			pointer = i + this.key-1;
+			if (pointer == 26) {
+				pointer = 0;
+			}
+			dictCiph.put(arrAlpha[pointer], String.valueOf(i));
 		}
 
+		String[] input = string.split("(?!^)");
+		String output = "";
+
+		for (String c : input){
+			output += dictCiph.get(c);
+		}
+
+		return output;
+		}
 	}
 
 	/**
