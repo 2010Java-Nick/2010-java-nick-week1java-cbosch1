@@ -33,9 +33,9 @@ public class EvaluationService {
 	public String acronym(String phrase) {
 		
 		String result = "";
-		String[] words = phrase.split(" ");
+		String[] words = phrase.split("\\W");
 		for (String w : words){
-			result += w.toCharArray()[0];
+			result += w.toUpperCase().toCharArray()[0];
 		}
 		return result;
 	}
@@ -224,7 +224,7 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		Map<String, Integer> map = new HashMap<>();
-		for (String s : string.split(" ")){
+		for (String s : string.split("\\W")){
 			if (map.get(s) == null){
 				map.put(s, 1);
 			}
@@ -274,7 +274,25 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
+			List<T> list = this.getSortedList();
+			int left = 0;
+			int right = list.size();
+
+			while (left <= right) {
+				int middle = left + (right - 1) / 2;
+
+				if (list.get(middle).equals(t)){
+					return middle;
+				}
+
+				//if (list.get(middle) > t) {
+				//	left = middle + 1;
+				//}
+
+				else{
+					right = middle - 1;
+				}
+			}
 			return 0;
 		}
 
@@ -311,8 +329,41 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String vowels = "aeiouh";
+		String[] starters = {"th", "sch", "qu"}; //Accounts for weird word beginnings, scales with additions.
+		String[] words = string.toLowerCase().split("\\W");
+		String phrase = "";
+
+		for (String w : words) {
+			String word = w;
+
+			for(String starter : starters){ //Move any starting group sounds to end of word.
+				if (w.startsWith(starter)){
+					word = w.substring(starter.length());
+					word += starter;
+				}
+			}
+
+			String[] arr = word.split("(?!^)");
+			for (String c : arr){
+				if (vowels.contains(c)){ //Add ay to end and finish string
+					word += "ay";
+					break;
+				}
+				else{ //Move character to end of string
+					word = word.substring(1);
+					word += c;
+				}
+			}
+			if (phrase.equals("")){// Properly rebuild phrase
+				phrase = word;
+			}
+			else {
+				phrase += " " + word;
+			}
+
+		}
+		return phrase;
 	}
 
 	/**
@@ -331,7 +382,18 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
+
+		String[] nums = String.valueOf(input).split("(?!^)");
+		int length = nums.length;
+		int calculator = 0;
+
+		for (String n : nums){
+			calculator += Math.pow(Integer.parseInt(n), length);
+		}
+
+		if (input == calculator) {
+			return true;
+		}
 		return false;
 	}
 
