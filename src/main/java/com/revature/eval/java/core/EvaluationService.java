@@ -34,7 +34,8 @@ public class EvaluationService {
 	public String acronym(String phrase) {
 		
 		String result = "";
-		String[] words = phrase.split("\\W");
+		String stripped = phrase.replaceAll("[^a-zA-Z\\s:]", " ");
+		String[] words = stripped.split("\\W+");
 		for (String w : words){
 			result += w.toUpperCase().toCharArray()[0];
 		}
@@ -137,11 +138,11 @@ public class EvaluationService {
 		int score = 0;
 		String input = string.toUpperCase();
 		String onePoint = "AEIOULNRST";
-		String twoPoint = "G";
-		String threePoint = "CMP";
+		String twoPoint = "DG";
+		String threePoint = "BCMP";
 		String fourPoint = "FHVWY";
 		String fivePoint = "K";
-		String eightPoint = "JK";
+		String eightPoint = "JX";
 		String tenPoint = "QZ";
 		
 		String[] ar = input.split("(?!^)");
@@ -204,14 +205,19 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
+	public String cleanPhoneNumber(String string) throws IllegalArgumentException {
 		String nums = string.replaceAll("\\D", "");
-
-		if (nums.length() > 10){
+		switch(nums.length()){
+			
+			case 11:
 			nums = nums.substring(1);
-		}
+			
+			case 10:
+			return nums;
 
-		return nums;
+			default:
+			throw new IllegalArgumentException("Phone number could not be parsed");
+		}
 	}
 
 	/**
@@ -233,6 +239,7 @@ public class EvaluationService {
 				map.put(s, map.get(s)+1);
 			}
 		}
+		map.remove("");
 		return map;
 	}
 
