@@ -569,14 +569,54 @@ public class EvaluationService {
 	static class AtbashCipher {
 
 		/**
+		 * Helper method to generate atbash dictionary,
+		 * Utilized by encode and decode methods,
+		 * Returns Map<"Decoded letter", "Encoded letter">
+		 * @return
+		 */
+		private static Map<String, String> getAtbashMap(){
+			String lower = "abcdefghijklmnopqrstuvwxyz";
+			String[] arrLower = lower.split("(?!^)");
+			//String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			//String[] arrUpper = upper.split("(?!^)");
+			Map<String, String> atbashDict = new HashMap<>();
+
+			for (int i = 0; i < lower.length(); i++){
+				atbashDict.put(arrLower[i], arrLower[25 - i]);
+				//atbashDict.put(arrUpper[i], arrUpper[25 - i]);
+			}
+			for (int i = 0; i < 10; i++){
+				atbashDict.put(String.valueOf(i), String.valueOf(i));
+			}
+
+			return atbashDict;
+		}
+
+		/**
 		 * Question 13
 		 * 
 		 * @param string
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+
+			Map<String, String> dict = getAtbashMap();
+			String[] input = string.replaceAll("[^a-zA-Z0-9]", "").toLowerCase().split("(?!^)");
+			String output = "";
+			int spaceCounter = 0;
+
+			for (String c : input){
+				spaceCounter++;
+				if (spaceCounter == 6){
+					output += " " + dict.get(c);
+					spaceCounter = 1;
+				}
+				else {
+					output += dict.get(c);
+				}
+
+			}
+			return output;
 		}
 
 		/**
