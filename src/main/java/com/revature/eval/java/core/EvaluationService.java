@@ -470,24 +470,33 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 		
-			String alphabet = "abcdefghijklmnopqrstuvwxyz";
-			String[] arrAlpha = alphabet.split("(?!^)");
+			String lower = "abcdefghijklmnopqrstuvwxyz";
+			String[] arrLower = lower.split("(?!^)");
+			String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			String[] arrUpper = upper.split("(?!^)");
+
 			Map<String, String> dictCiph = new HashMap<String, String>();
 			int pointer = 0;
 
-			for (int i = 0; i < alphabet.length(); i++){
-				pointer = i + this.key-1;
-				if (pointer == 26) {
-					pointer = 0;
+			for (int i = 0; i < lower.length(); i++){
+				pointer = i + this.key;
+				if (pointer >= 26) {
+					pointer -= 26;
 				}
-				dictCiph.put(arrAlpha[pointer], String.valueOf(i));
+				dictCiph.put(arrLower[i], arrLower[pointer]);
+				dictCiph.put(arrUpper[i], arrUpper[pointer]);
 			}
 
 			String[] input = string.split("(?!^)");
 			String output = "";
 
 			for (String c : input){
-				output += dictCiph.get(c);
+				if (dictCiph.get(c) != null){
+					output += dictCiph.get(c);
+				}
+				else {
+					output += c;
+				}
 			}
 
 			return output;
