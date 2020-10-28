@@ -626,8 +626,15 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			Map<String, String> dict = getAtbashMap();
+			String[] input = string.replaceAll(" ", "").split("(?!^)");
+			String output = "";
+
+			for (String c : input){
+				output += dict.get(c);
+			}
+			
+			return output;
 		}
 	}
 
