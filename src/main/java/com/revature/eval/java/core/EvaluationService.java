@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EvaluationService {
 
@@ -507,21 +506,31 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	*/
-	public int calculateNthPrime(int num) {
-
-		/* generate primes until num have been added to list
-		*
-		*	List<Integer> primeList = new ArrayList<>();
-		*
-		*	int primePointer = 0 //For tracking where we've been
-		*
-		*	while(primeList.length() < num) {
-		*		generate next prime
-		*	}
-		*
-		*	return primeList.last
-		*/
-		return 0;
+	public int calculateNthPrime(int nth){
+		if (nth == 0) {
+			throw new IllegalArgumentException("Must retrieve at least one prime");
+		}
+		int num = 2;
+		int primes = 1;
+		
+		while(primes < nth) {
+			int divisor;
+			num++;
+			if (num != 2){
+				if (num % 2 == 0){
+					continue;
+				}
+				for (divisor = 3; divisor <= num; divisor++) {
+					if (num % divisor == 0) {
+						break;
+					}
+				}
+				if (divisor == num) {
+					primes++;
+				}
+			}
+		}
+		return num;
 	}
 
 	/**
