@@ -633,7 +633,7 @@ public class EvaluationService {
 			for (String c : input){
 				output += dict.get(c);
 			}
-			
+
 			return output;
 		}
 	}
@@ -661,7 +661,31 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
+		Integer[] nums = new Integer[10]; 
+		int i = 0;
+
+		for (String c : string.replaceAll("[^Xx0-9]", "").split("(?!^)")) {
+			if (c.contains("X") || c.contains("x")) {
+				nums[i] = 10;
+			}
+			else {
+				nums[i] = Integer.parseInt(c);
+			}
+			i++;
+		}
+
+		int calc = 0;
+		int f = 0;
+
+		for (int n = 10; n > 0; n--){
+			calc += (n * nums[f]);
+			f++;
+		}
+
+		if ((calc % 11) == 0){
+			return true;
+		}
+
 		return false;
 	}
 
@@ -679,8 +703,29 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		if (string.length() == 0){
+			return false;
+		}
+
+		String lower = "abcdefghijklmnopqrstuvwxyz";
+		String[] input = string.toLowerCase().replaceAll("[^a-z]", "").split("(?!^)");
+		String[] arrLow = lower.split("(?!^)");
+		Map<String, Integer> alphaMap = new HashMap<>();
+
+		for (String a : arrLow) {
+			alphaMap.put(a, 1);
+		}
+
+		for (String c : input){
+			alphaMap.put(c, alphaMap.get(c)-1);
+		}
+
+		for (int i : alphaMap.values()){
+			if (i > 0){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
