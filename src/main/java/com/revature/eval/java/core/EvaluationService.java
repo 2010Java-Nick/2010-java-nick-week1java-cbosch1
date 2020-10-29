@@ -391,10 +391,7 @@ public class EvaluationService {
 			calculator += Math.pow(Integer.parseInt(n), length);
 		}
 
-		if (input == calculator) {
-			return true;
-		}
-		return false;
+		return input == calculator;
 	}
 
 	/**
@@ -682,11 +679,7 @@ public class EvaluationService {
 			f++;
 		}
 
-		if ((calc % 11) == 0){
-			return true;
-		}
-
-		return false;
+	return (calc % 11) == 0;
 	}
 
 	/**
