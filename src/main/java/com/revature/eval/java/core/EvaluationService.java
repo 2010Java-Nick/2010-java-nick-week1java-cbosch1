@@ -1,7 +1,9 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDateTime;
 import java.time.temporal.Temporal;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -661,7 +663,14 @@ public class EvaluationService {
 		Integer[] nums = new Integer[10]; 
 		int i = 0;
 
-		for (String c : string.replaceAll("[^Xx0-9]", "").split("(?!^)")) {
+		int preLength = string.length();
+		string = string.replaceAll("[^\\dXx-]", "");
+
+		if (string.length() < preLength) {
+			return false;
+		}
+
+		for (String c : string.replaceAll("[^\\dXx]", "").split("(?!^)")) {
 			if (c.contains("X") || c.contains("x")) {
 				nums[i] = 10;
 			}
@@ -730,8 +739,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String time = given.toString();
+		if (time.length() < 11){
+			time += "T00:00:00";
+		}
+		LocalDateTime dateTime = LocalDateTime.parse(time);
+
+		long seconds = 1000000000l;
+		return dateTime.plusSeconds(seconds);
 	}
 
 	/**
@@ -748,8 +763,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		HashSet<Integer> nums = new HashSet<>();
+
+		for (int multi : set) {
+			for (int j = 0; j < i; j++){
+				if (j % multi == 0){
+					nums.add(j);
+				}
+			}
+		}
+
+		int sum = 0;
+		for (Integer j : nums){ 
+			sum += j;
+		}
+		return sum;
 	}
 
 	/**
@@ -789,8 +817,36 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		string = string.replace(" ", "");
+
+		int preLength = string.length();
+		string = string.replaceAll("[^\\d\\s]", "");
+
+		if (string.length() < 2 || string.length() < preLength) {
+			return false;
+		}
+
+		String[] nums = string.split("(?!^)");
+
+		int sum = 0;
+		Integer i = 0;
+		int d = 1;
+
+		for (int c = nums.length-1; c > -1; c--){
+			if (d == 0){
+				i = (Integer.parseInt(nums[c]) * 2);
+				d = 1;
+			}
+			else {
+				d = 0;
+				i = Integer.parseInt(nums[c]);
+			}
+			if (i > 9){
+				i -= 9; 
+			}
+			sum += i;
+		}
+		return (sum % 10 == 0);
 	}
 
 	/**
@@ -821,8 +877,54 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		String[] words = string.split(" ");
+
+		String op = "";
+
+		for (String w : words){
+			switch(w) {
+				case "plus":
+				op = w;
+				break;
+
+				case "minus":
+				op = w;
+				break;
+
+				case "multiplied":
+				op = w;
+				break;
+
+				case "divided" :
+				op = w;
+				break;
+			}
+		}
+
+		String[] halves = string.split(op);
+		Integer first = Integer.parseInt(halves[0].replaceAll("[^-\\d]", ""));
+		Integer second = Integer.parseInt(halves[1].replaceAll("[^-\\d]", ""));
+
+		Integer num = 0;
+		
+		switch(op) {
+			case "plus":
+			num = first + second;
+			break;
+
+			case "minus":
+			num = first - second;
+			break;
+
+			case "multiplied":
+			num = first * second;
+			break;
+
+			case "divided" :
+			num = first / second;
+			break;
+		}
+		return num;
 	}
 
 }
