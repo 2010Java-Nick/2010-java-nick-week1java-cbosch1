@@ -576,13 +576,10 @@ public class EvaluationService {
 		private static Map<String, String> getAtbashMap(){
 			String lower = "abcdefghijklmnopqrstuvwxyz";
 			String[] arrLower = lower.split("(?!^)");
-			//String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			//String[] arrUpper = upper.split("(?!^)");
 			Map<String, String> atbashDict = new HashMap<>();
 
 			for (int i = 0; i < lower.length(); i++){
 				atbashDict.put(arrLower[i], arrLower[25 - i]);
-				//atbashDict.put(arrUpper[i], arrUpper[25 - i]);
 			}
 			for (int i = 0; i < 10; i++){
 				atbashDict.put(String.valueOf(i), String.valueOf(i));
@@ -744,9 +741,7 @@ public class EvaluationService {
 			time += "T00:00:00";
 		}
 		LocalDateTime dateTime = LocalDateTime.parse(time);
-
-		long seconds = 1000000000l;
-		return dateTime.plusSeconds(seconds);
+		return dateTime.plusSeconds(1000000000l);
 	}
 
 	/**
@@ -765,17 +760,15 @@ public class EvaluationService {
 	public int getSumOfMultiples(int i, int[] set) {
 		HashSet<Integer> nums = new HashSet<>();
 
+		int sum = 0;
 		for (int multi : set) {
 			for (int j = 0; j < i; j++){
 				if (j % multi == 0){
-					nums.add(j);
+					if (nums.add(j)){
+						sum += j;
+					}
 				}
 			}
-		}
-
-		int sum = 0;
-		for (Integer j : nums){ 
-			sum += j;
 		}
 		return sum;
 	}
